@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Application</class>
+ <widget class="QMainWindow" name="Application">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1141</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Space</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#Application {
+    background-color: #36393F;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+}
+
+QLabel {
+    color: #FFFFFF;
+}
+
+QPushButton {
+    background-color: #7289DA;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+QPushButton:hover {
+    background-color: #677BC4;
+}
+
+QLineEdit {
+    background-color: #FFFFFF;
+    color: #36393F;
+    border: 1px solid #7289DA;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+QPlainTextEdit {
+    background-color: #FFFFFF;
+    color: #36393F;
+    border: 1px solid #7289DA;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+/* Добавьте другие стили для своих виджетов здесь */
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
