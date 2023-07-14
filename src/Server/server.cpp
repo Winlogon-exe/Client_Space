@@ -1,13 +1,14 @@
-#include "server/server.h"
-#include <boost/asio.hpp>
-#include <iostream>
-#include <boost/beast.hpp>
-#include <QDebug>
+#include"server/server.h"
+
+#include<boost/asio.hpp>
+#include<iostream>
+#include<boost/beast.hpp>
+#include<QDebug>
 
 using namespace boost::asio;
 using namespace boost::beast;
 
-void ClientSession::startReading()
+void session::read_message()
 {
     boost::asio::async_read_until(
         socket,
@@ -25,7 +26,7 @@ void ClientSession::startReading()
                 qDebug() << "Received message: " << QString::fromStdString(message);
 
                 // Продолжение чтения
-                self->startReading();
+                self->read_message();
             }
             else
             {
@@ -34,7 +35,7 @@ void ClientSession::startReading()
         });
 }
 
-void ClientSession::stop()
+void session::stop()
 {
     // Закрыть сокет
     socket.close();
@@ -43,15 +44,15 @@ void ClientSession::stop()
     // Освободить другие ресурсы, связанные с сеансом
 }
 
-void Server::startAccepting()
+void Server::async_accept()
 {
     socket.emplace(io_context);
 
-    acceptor.async_accept(*socket, [&](const boost::system::error_code& error) {
+    acceptor.async_accept(*socket, [&](boost::system::error_code error) {
         if (!error)
         {
-            std::make_shared<ClientSession>(std::move(*socket))->startReading();
-            startAccepting();
+            std::make_shared<session>(std::move(*socket))->read_message();
+            async_accept();
         }
         else
         {

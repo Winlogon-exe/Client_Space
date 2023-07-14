@@ -47,7 +47,8 @@ void MainWindow::on_button_continue_reg_clicked()
     //Если все поля валидны ...
     if (checkFieldsValidity())
     {
-
+        application_window->show();
+        this->close();
 
     }
     else

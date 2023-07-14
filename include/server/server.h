@@ -10,24 +10,24 @@
 using namespace boost::asio;
 using namespace boost::beast;
 
-// Класс, ответственный за управление подключением клиента
-class ClientSession : public std::enable_shared_from_this<ClientSession>
+//Класс, ответственный за инициализацию и управление сервером в целом.
+class session : public std::enable_shared_from_this<session>
 {
 public:
-    ClientSession(boost::asio::ip::tcp::socket&& socket) :
+    session(boost::asio::ip::tcp::socket&& socket) :
         socket(std::move(socket)) {}
 
-    void startReading();
+    void read_message();
     void stop();
 
 private:
-    void handleRead(const boost::system::error_code& error, std::size_t bytes_transferred);
+    void handle_read(const boost::system::error_code& error, std::size_t bytes_transferred);
 
     boost::asio::ip::tcp::socket socket;
     boost::asio::streambuf streambuf;
 };
 
-// Класс, представляющий сервер
+
 class Server
 {
 public:
@@ -35,11 +35,11 @@ public:
         io_context(io_context),
         acceptor(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) {}
 
-    void startAccepting();
+    void async_accept();
     void stop();
 
 private:
-    void handleAccept(const boost::system::error_code& error);
+    void handle_accept(const boost::system::error_code& error);
 
     boost::asio::io_context& io_context;
     boost::asio::ip::tcp::acceptor acceptor;
