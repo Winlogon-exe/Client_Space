@@ -1,14 +1,10 @@
-#include"server/server.h"
+#include "server/server.h"
 
-#include<boost/asio.hpp>
-#include<iostream>
-#include<boost/beast.hpp>
-#include<QDebug>
+Session::Session(boost::asio::ip::tcp::socket socket)
+    : socket(std::move(socket)){}
 
-using namespace boost::asio;
-using namespace boost::beast;
 
-void session::read_message()
+void Session::read_message()
 {
     boost::asio::async_read_until(
         socket,
@@ -35,23 +31,29 @@ void session::read_message()
         });
 }
 
-void session::stop()
+void Session::stop()
 {
-    // Закрыть сокет
     socket.close();
-    // Очистить буфер
     streambuf.consume(streambuf.size());
-    // Освободить другие ресурсы, связанные с сеансом
+}
+
+Server::Server(boost::asio::io_context& ioContext, const std::string& address, const std::string& port)
+    : acceptor(ioContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::make_address(address), std::stoi(port))),
+    io_context(ioContext){}
+
+void Server::start()
+{
+    async_accept();
 }
 
 void Server::async_accept()
 {
     socket.emplace(io_context);
 
-    acceptor.async_accept(*socket, [&](boost::system::error_code error) {
+    acceptor.async_accept(*socket, [&](const boost::system::error_code& error) {
         if (!error)
         {
-            std::make_shared<session>(std::move(*socket))->read_message();
+            std::make_shared<Session>(std::move(*socket))->read_message();
             async_accept();
         }
         else
@@ -63,9 +65,7 @@ void Server::async_accept()
 
 void Server::stop()
 {
-    // Остановить прослушивание новых соединений
     acceptor.close();
-    // Закрыть сокет, если он открыт
     if (socket)
     {
         socket->close();
