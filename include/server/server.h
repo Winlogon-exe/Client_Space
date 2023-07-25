@@ -1,5 +1,7 @@
 #pragma once
+
 #include"boost/asio.hpp"
+
 #include<iostream>
 class Connection :public std::enable_shared_from_this<Connection>
 {
