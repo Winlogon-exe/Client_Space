@@ -2,6 +2,8 @@
 #define APPLICATION_H
 
 #include <QMainWindow>
+#include <QListWidget>
+
 
 namespace Ui {
 class Application;
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::Application *ui;
+    QListWidget *channelListWidget; // Виджет для списка каналов
 };
 
 #endif // APPLICATION_H

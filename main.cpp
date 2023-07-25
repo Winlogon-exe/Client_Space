@@ -1,6 +1,7 @@
 #include "ui/RegWindow/mainwindow.h"
 #include "client/client.h"
 #include "server/server.h"
+#include"application.h"
 
 #include <QApplication>
 #include <QStyle>
@@ -31,8 +32,8 @@ void runClient(boost::asio::io_context& ioContext)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    Application app;
+    app.show();
 
     boost::asio::io_context ioContext;
 
