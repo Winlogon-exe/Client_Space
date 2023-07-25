@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidget>
+#include<QTextEdit>
 
 
 namespace Ui {
@@ -19,7 +20,13 @@ public:
 
 private:
     Ui::Application *ui;
-    QListWidget *channelListWidget; // Виджет для списка каналов
-};
+    QListWidget *channelListWidget;
+    QTextEdit *messageDisplayWidget;
+    QLineEdit *messageInputWidget;
+    QVector<QString> channels;
+    QMap<QString, QVector<QString>> messages;
+    int currentChannelIndex;
 
+    void addChannel(const QString& channelName);
+};
 #endif // APPLICATION_H
