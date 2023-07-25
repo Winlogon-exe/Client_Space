@@ -18,6 +18,9 @@ public:
     explicit Application(QWidget *parent = nullptr);
     ~Application();
 
+private slots:
+    void on_channelListWidget_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::Application *ui;
     QListWidget *channelListWidget;
