@@ -75,6 +75,9 @@ QPlainTextEdit {
       <height>551</height>
      </rect>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEditMessageInput">
     <property name="geometry">

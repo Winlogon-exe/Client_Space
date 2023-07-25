@@ -1,19 +1,14 @@
 #pragma once
-#include <boost/asio.hpp>
-
+#include<boost/asio.hpp>
+#include<iostream>
 class Client
 {
-public:
-    Client(boost::asio::io_context& ioContext, const std::string& serverAddress, const std::string& serverPort);
-
-    void start();
-
 private:
-    void readMessage();
-    void sendMessage(const std::string& message);
-
-    boost::asio::io_context& ioContext_;
+    boost::asio::io_context& io_context_;
     boost::asio::ip::tcp::socket socket_;
-    boost::asio::ip::tcp::resolver resolver_;
-    boost::asio::streambuf receiveBuffer_;
+    boost::asio::streambuf& buffer_;
+    uint16_t port_;
+public:
+    Client(boost::asio::io_context& io_context, uint16_t port, boost::asio::streambuf& buffer);
+    void ConnectToServer();
 };

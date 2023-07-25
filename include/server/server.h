@@ -1,34 +1,26 @@
 #pragma once
-
-#include <boost/asio.hpp>
-#include <iostream>
-#include <boost/beast.hpp>
-#include <QDebug>
-
-class Session : public std::enable_shared_from_this<Session>
+#include"boost/asio.hpp"
+#include<iostream>
+class Connection :public std::enable_shared_from_this<Connection>
 {
-public:
-    explicit Session(boost::asio::ip::tcp::socket socket);
-
-    void read_message();
-    void stop();
-
 private:
-    boost::asio::ip::tcp::socket socket;
-    boost::asio::streambuf streambuf;
+    boost::asio::ip::tcp::socket socket_;
+    std::shared_ptr<boost::asio::streambuf> buffer_;
+    void ReadData();
+public:
+    Connection(boost::asio::io_context& io_context);
+    boost::asio::ip::tcp::socket& socket();
+    void Start();
 };
 
 class Server
 {
-public:
-    Server(boost::asio::io_context& ioContext, const std::string& address, const std::string& port);
-
-    void start();
-    void async_accept();
-    void stop();
-
 private:
-    boost::asio::ip::tcp::acceptor acceptor;
-    boost::asio::io_context& io_context;
-    std::optional<boost::asio::ip::tcp::socket> socket;
+    boost::asio::io_context& io_context_;
+    boost::asio::ip::tcp::acceptor acceptor_;
+    uint16_t port_;
+public:
+    Server(boost::asio::io_context& io_context, uint16_t port, boost::asio::streambuf& buffer);
+    void Listening();
+
 };

@@ -7,27 +7,8 @@
 #include <QStyle>
 #include <thread>
 
-void runServer(boost::asio::io_context& ioContext)
-{
-    std::string serverAddress = "127.0.0.1";
-    std::string serverPort = "8080";
 
-    Server server(ioContext, serverAddress, serverPort);
-    server.start();
-    //log
-    qDebug() << "Server started and listening on" << QString::fromStdString(serverAddress) << ":" << QString::fromStdString(serverPort);
-}
 
-void runClient(boost::asio::io_context& ioContext)
-{
-    std::string serverAddress = "127.0.0.1";
-    std::string serverPort = "8080";
-
-    Client client(ioContext, serverAddress, serverPort);
-    client.start();
-    //log
-    qDebug() << "Client connected to" << QString::fromStdString(serverAddress) << ":" << QString::fromStdString(serverPort);
-}
 
 int main(int argc, char *argv[])
 {
@@ -35,16 +16,32 @@ int main(int argc, char *argv[])
     Application app;
     app.show();
 
-    boost::asio::io_context ioContext;
+    boost::asio::io_context server_io_context;
+    boost::asio::io_context client_io_context;
 
-    // Запуск сервера и клиента
-    std::thread serverThread(runServer, std::ref(ioContext));
-    std::thread clientThread(runClient, std::ref(ioContext));
+    uint16_t server_port = 8080;
 
+    // Создаем объект сервера и передаем io_context и порт в конструктор
+    boost::asio::streambuf server_buffer;
+    auto  server = std::make_shared<Server>(server_io_context, server_port, server_buffer);
 
-    // После выхода из цикла io_context, убедитесь, что все потоки завершились
-    serverThread.join();
-    clientThread.join();
+    // Создаем объект клиента и передаем io_context и порт в конструктор
+     auto client = std::make_shared<Client>(client_io_context, server_port, server_buffer);
+
+    server->Listening();
+    client->ConnectToServer();
+
+    // Запускаем io_context для сервера и клиента
+    // Запускаем io_context для сервера и клиента
+    std::thread server_thread([&]() {
+        server_io_context.run_for(std::chrono::seconds::max());
+    });
+
+    std::thread client_thread([&]() {
+        client_io_context.run_for(std::chrono::seconds::max());
+    });
+    server_thread.join();
+    client_thread.join();
 
     return a.exec();
 }

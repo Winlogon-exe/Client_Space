@@ -21,6 +21,8 @@ public:
 private slots:
     void on_channelListWidget_itemClicked(QListWidgetItem *item);
 
+    void on_lineEditMessageInput_returnPressed();
+
 private:
     Ui::Application *ui;
     QListWidget *channelListWidget;

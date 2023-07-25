@@ -49,3 +49,28 @@ void Application::on_channelListWidget_itemClicked(QListWidgetItem *item)
     }
 }
 
+
+void Application::on_lineEditMessageInput_returnPressed()
+{
+    QString content = messageInputWidget->text().trimmed();
+
+    if (!content.isEmpty() && currentChannelIndex >= 0 && currentChannelIndex < channels.size()) {
+        QString channelName = channels.at(currentChannelIndex);
+
+        messages[channelName].append(content);
+
+        messageDisplayWidget->append(content);
+
+        messageInputWidget->clear();
+    }
+}
+
+void Application::addChannel(const QString& channelName)
+{
+    if (!channels.contains(channelName)) {
+        channels.append(channelName);
+        messages.insert(channelName, QVector<QString>());
+        channelListWidget->addItem(channelName);
+    }
+}
+
