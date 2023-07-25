@@ -66,6 +66,26 @@ QPlainTextEdit {
      </rect>
     </property>
    </widget>
+   <widget class="QTextEdit" name="textEditMessageDisplay">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>30</y>
+      <width>791</width>
+      <height>551</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditMessageInput">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>520</y>
+      <width>661</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
