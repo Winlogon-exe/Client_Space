@@ -27,6 +27,7 @@ void Session::read_message()
             else
             {
                 // Обработка ошибки чтения
+                qDebug() << "Error reading message: " << error.message();
             }
         });
 }
@@ -58,7 +59,7 @@ void Server::async_accept()
         }
         else
         {
-            // Обработка ошибки принятия соединения
+            qDebug() << "Error async_accept: " << error.message();
         }
     });
 }
