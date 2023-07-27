@@ -18,7 +18,7 @@
 - **Boost** (версия 1.82.0 и выше)
 - **Qt** (версия 5 или 6, включая компоненты Widgets и Sql)
 - **ws2_32** и **wsock32** (Windows Sockets 2 библиотеки)
-- - **Vcpkg** (https://github.com/microsoft/vcpkg) для управления сторонними библиотеками C++.
+- **Vcpkg** (https://github.com/microsoft/vcpkg) для управления сторонними библиотеками C++.
 
 ## Инструкции по сборке
 
