@@ -21,6 +21,7 @@ endif()
 set(SOURCES
     main.cpp
     src/server/server.cpp
+    src/server/server_utils.cpp
     src/client/client.cpp
     src/common/message.cpp
     ui/RegWindow/MainWindow.cpp
@@ -30,6 +31,7 @@ set(SOURCES
 
 set(HEADERS
     include/server/server.h
+    include/server/server_utils.h
     include/client/client.h
     include/common/message.h
     ui/RegWindow/MainWindow.h

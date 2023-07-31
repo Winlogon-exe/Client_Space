@@ -1,4 +1,7 @@
 #include "server/server.h"
+#include"client/client.h"
+
+#include<mainwindow.h>
 #include <QDebug> // Включаем заголовочный файл для использования qDebug()
 
 Server::Server(boost::asio::io_context& io_context, uint16_t port, boost::asio::streambuf& buffer)
@@ -31,7 +34,7 @@ void Connection::ReadData()
             std::istream input_stream(buffer_.get());
             std::string data;
             std::getline(input_stream, data);
-            qDebug()<< "\nПрочитанные данные: " << data;
+            qDebug()<< "\nПрочитанные данные:" << data;
             ReadData();
         }
         else
@@ -50,7 +53,7 @@ void Server::Listening()
         if (!error)
         {
            qDebug() << "Server: Listening " << "port:"<<port_;
-            connection->Start();
+           connection->Start();
         }
         else
         {
@@ -59,3 +62,5 @@ void Server::Listening()
         Listening();
     });
 }
+
+

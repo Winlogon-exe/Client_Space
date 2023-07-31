@@ -10,7 +10,10 @@
 #include "ui_mainwindow.h"
 #include"login.h"
 #include"application.h"
-#include"client/client.h"
+#include"server/server.h"
+#include "client/client.h"
+#include"server/server_utils.h"
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -18,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    isFieldsValid = false; // регистрация
 
     // При регистрации открывается форма Application
     application_window = std::make_unique<Application>();
@@ -44,12 +46,18 @@ void MainWindow::on_text_button_login_clicked()
 //text "Продолжить"
 void MainWindow::on_button_continue_reg_clicked()
 {
-    //Если все поля валидны ...
+    // Если все поля валидны ...
     if (checkFieldsValidity())
     {
+        // Запускаем сервер и клиента в отдельном потоке
+        std::thread server_client_thread(runServerAndClient);
+
+        // Показываем Application
         application_window->show();
         this->close();
 
+        // Отделяем поток, чтобы он работал независимо от главного потока
+        server_client_thread.detach();;
     }
     else
     {
