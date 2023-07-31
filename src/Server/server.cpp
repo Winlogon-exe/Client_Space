@@ -31,12 +31,12 @@ void Connection::ReadData()
             std::istream input_stream(buffer_.get());
             std::string data;
             std::getline(input_stream, data);
-            qDebug() << "\nПрочитанные данные: " << data;
+            qDebug()<< "\nПрочитанные данные: " << data;
             ReadData();
         }
         else
         {
-            qDebug() << "Failed to read data: " << error.message();
+            qDebug()<< "Failed to read data: " << error.message();
         }
     });
 }
@@ -49,12 +49,12 @@ void Server::Listening()
     {
         if (!error)
         {
-             qDebug() << "Server: Listening " << "port:"<<port_;
+           qDebug() << "Server: Listening " << "port:"<<port_;
             connection->Start();
         }
         else
         {
-            qDebug() << "\nFailed listening server: \n" << error.message();
+          qDebug() << "\nFailed listening server: \n" << error.message();
         }
         Listening();
     });

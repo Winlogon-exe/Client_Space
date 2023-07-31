@@ -31,17 +31,26 @@ int main(int argc, char *argv[])
     server->Listening();
     client->ConnectToServer();
 
-    // Запускаем io_context для сервера и клиента
-    // Запускаем io_context для сервера и клиента
+    // Запускаем io_context для сервера и клиента в отдельных потоках
     std::thread server_thread([&]() {
-        server_io_context.run_for(std::chrono::seconds::max());
+        server_io_context.run();
     });
 
     std::thread client_thread([&]() {
-        client_io_context.run_for(std::chrono::seconds::max());
+        client_io_context.run();
     });
+
+    // Запуск Qt приложения
+    int result = a.exec();
+
+    // Завершение работы сервера и клиента
+    server_io_context.stop();
+
+
+    // Дожидаемся завершения потоков сервера и клиента
     server_thread.join();
     client_thread.join();
 
-    return a.exec();
+    // Возвращаем результат работы Qt приложения
+    return result;
 }
