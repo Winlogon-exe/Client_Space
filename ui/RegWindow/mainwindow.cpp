@@ -10,10 +10,7 @@
 #include "ui_mainwindow.h"
 #include"login.h"
 #include"application.h"
-#include"server/server.h"
-#include "client/client.h"
-#include"server/server_utils.h"
-
+#include"client/run_client.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -49,15 +46,14 @@ void MainWindow::on_button_continue_reg_clicked()
     // Если все поля валидны ...
     if (checkFieldsValidity())
     {
-        // Запускаем сервер и клиента в отдельном потоке
-        std::thread server_client_thread(runServerAndClient);
-
+        // Запускаем клиента в отдельном потоке
+        std::thread client_thread(runClient);
         // Показываем Application
         application_window->show();
         this->close();
 
         // Отделяем поток, чтобы он работал независимо от главного потока
-        server_client_thread.detach();;
+        client_thread.detach();
     }
     else
     {

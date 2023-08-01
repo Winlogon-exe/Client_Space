@@ -20,9 +20,8 @@ endif()
 
 set(SOURCES
     main.cpp
-    src/server/server.cpp
-    src/server/server_utils.cpp
     src/client/client.cpp
+    src/client/run_client.cpp
     src/common/message.cpp
     ui/RegWindow/MainWindow.cpp
     ui/LoginWindow/Login.cpp
@@ -30,9 +29,8 @@ set(SOURCES
 )
 
 set(HEADERS
-    include/server/server.h
-    include/server/server_utils.h
     include/client/client.h
+    include/client/run_client.h
     include/common/message.h
     ui/RegWindow/MainWindow.h
     ui/LoginWindow/Login.h
