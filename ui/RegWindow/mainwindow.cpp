@@ -53,7 +53,7 @@ void MainWindow::on_button_continue_reg_clicked()
         this->close();
 
         // Отделяем поток, чтобы он работал независимо от главного потока
-        client_thread.detach();
+        client_thread.join();
     }
     else
     {
