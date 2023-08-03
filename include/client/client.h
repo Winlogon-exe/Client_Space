@@ -11,4 +11,6 @@ private:
 public:
     Client(boost::asio::io_context& io_context, uint16_t port, boost::asio::streambuf& buffer);
     void ConnectToServer();
+    void SendPostRequest();
+    void ReceiveResponse();
 };
