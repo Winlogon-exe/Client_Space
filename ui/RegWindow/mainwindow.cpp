@@ -12,7 +12,6 @@
 #include"application.h"
 #include"client/run_client.h"
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -20,10 +19,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // При регистрации открывается форма Application
-    application_window = std::make_unique<Application>();
+    applicationWindow = std::make_unique<Application>();
 
     // Label - "Хотите войти?"
-    loginwindow = std::make_unique<Login>();
+    loginWindow = std::make_unique<Login>();
 
 }
 
@@ -36,7 +35,7 @@ MainWindow::~MainWindow()
 //click - "Хотите войти?"
 void MainWindow::on_text_button_login_clicked()
 {
-    loginwindow->show();
+    loginWindow->show();
     this->close();
 }
 
@@ -46,14 +45,24 @@ void MainWindow::on_button_continue_reg_clicked()
     // Если все поля валидны ...
     if (checkFieldsValidity())
     {
-        // Запускаем клиента в отдельном потоке
-        std::thread client_thread(runClient);
+
+        // Получаем данные, которые пользователь ввел в EditText
+        QString email = ui->lineEdit_email->text();
+        QString username = ui->lineEdit_username->text();
+        QString password = ui->lineEdit_password->text();
+
+        // Запускаем клиента в отдельном потоке и передаем ему данные
+        std::thread client_thread([email, username, password]() {
+            runClient(email, username, password);
+        });
+
+
         // Показываем Application
-        application_window->show();
+        applicationWindow->show();
         this->close();
 
         // Отделяем поток, чтобы он работал независимо от главного потока
-        client_thread.join();
+        client_thread.detach();
     }
     else
     {
@@ -62,7 +71,6 @@ void MainWindow::on_button_continue_reg_clicked()
         ui->lineEdit_empty->setStyleSheet("color: red;");
         ui->lineEdit_empty->setVisible(true);
     }
-
 }
 
 //English words

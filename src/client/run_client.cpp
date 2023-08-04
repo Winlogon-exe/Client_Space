@@ -1,10 +1,9 @@
 #include"client/client.h"
-
-void runClient()
-{
+#include"client/run_client.h"
+void runClient(const QString& email, const QString& username, const QString& password) {
     boost::asio::io_context io_context;
     boost::asio::streambuf buffer;
     Client client(io_context, 8080, buffer);
-    client.ConnectToServer();
+    client.connectToServer(email.toStdString(), username.toStdString(), password.toStdString());
     io_context.run();
 }

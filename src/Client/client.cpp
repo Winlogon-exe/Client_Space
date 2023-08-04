@@ -10,42 +10,46 @@ Client::Client(boost::asio::io_context& io_context, uint16_t port, boost::asio::
     port_(port),
     buffer_(buffer) {}
 
-void Client::ConnectToServer() {
-    boost::asio::ip::tcp::resolver resolver(io_context_);
-    boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), "127.0.0.1", std::to_string(port_));
-    boost::asio::ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+void Client::connectToServer(const std::string& email, const std::string& username, const std::string& password) {
+  boost::asio::ip::tcp::resolver resolver(io_context_);
+  boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), "127.0.0.1", std::to_string(port_));
+  boost::asio::ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
-    boost::asio::async_connect(socket_, endpoint_iterator,
-    [this](boost::system::error_code error, boost::asio::ip::tcp::resolver::iterator) {
-        if (!error) {
-            qDebug() << "Client: Connected to server, port:" << port_;
-            SendPostRequest(); // Вызываем функцию для отправки POST-запроса
-        } else {
-            qDebug() << "Failed to connect to server: " << error.message();
-        }
-    });
+  boost::asio::async_connect(socket_, endpoint_iterator,
+   [this, email, username, password](boost::system::error_code error, boost::asio::ip::tcp::resolver::iterator) {
+       if (!error) {
+           qDebug() << "Client: Connected to server, port:" << port_;
+
+           // Формируем данные в виде строки, которую отправим на сервер
+           std::string data = "email=" + email + "&username=" + username + "&password=" + password;
+
+           sendPostRequest(data); // Вызываем функцию для отправки POST-запроса
+       } else {
+           qDebug() << "Failed to connect to server: " << error.message();
+       }
+   });
 }
 
-void Client::SendPostRequest() {
+void Client::sendPostRequest(const std::string& data) {
+    // Формируем запрос с данными, которые пользователь ввел
     std::string request = "POST /post HTTP/1.1\r\n"
                           "Host: localhost\r\n"
                           "Content-Type: text/plain\r\n"
-                          "Content-Length: 14\r\n"
-                          "\r\n"
-                          "Hello, server!";
+                          "Content-Length: " + std::to_string(data.size()) + "\r\n"
+                                                          "\r\n" + data;
 
-boost::asio::async_write(socket_, boost::asio::buffer(request),
-[this](boost::system::error_code error, std::size_t bytes_transferred) {
-    if (!error) {
-        qDebug() << "Client: POST request sent to server";
-        ReceiveResponse(); // Вызываем функцию для получения ответа от сервера
-    } else {
-        qDebug() << "Failed to send POST request: " << error.message();
-    }
-});
+ boost::asio::async_write(socket_, boost::asio::buffer(request),
+  [this](boost::system::error_code error, std::size_t bytes_transferred) {
+      if (!error) {
+          qDebug() << "Client: POST request sent to server";
+          receiveResponse(); // после отправки запроса Вызываем функцию для получения ответа от сервера
+      } else {
+          qDebug() << "Failed to send POST request: " << error.message();
+      }
+  });
 }
 
-void Client::ReceiveResponse() {
+void Client::receiveResponse() {
     boost::asio::async_read_until(socket_, buffer_, "\r\n\r\n",
   [this](boost::system::error_code error, std::size_t bytes_transferred) {
       if (!error) {
