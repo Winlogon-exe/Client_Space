@@ -28,8 +28,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;  // Reg Window
-    std::unique_ptr<Application> application_window;  // Smart pointer to application window
-    std::unique_ptr<Login> loginwindow;  // Smart pointer to login window
+    std::unique_ptr<Application> applicationWindow;  // Smart pointer to application window
+    std::unique_ptr<Login> loginWindow;  // Smart pointer to login window
     bool isFieldsValid;//проверка полей
+
+
 };
 #endif // MAINWINDOW_H

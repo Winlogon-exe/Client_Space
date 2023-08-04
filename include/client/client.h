@@ -10,7 +10,7 @@ private:
     uint16_t port_;
 public:
     Client(boost::asio::io_context& io_context, uint16_t port, boost::asio::streambuf& buffer);
-    void ConnectToServer();
-    void SendPostRequest();
-    void ReceiveResponse();
+    void connectToServer(const std::string& email, const std::string& username, const std::string& password);
+    void sendPostRequest(const std::string& data);
+    void receiveResponse();
 };
