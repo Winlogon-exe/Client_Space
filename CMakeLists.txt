@@ -21,17 +21,15 @@ endif()
 set(SOURCES
     main.cpp
     src/client/client.cpp
-    src/client/run_client.cpp
-    src/common/message.cpp
+    src/client/runClient.cpp
     ui/RegWindow/MainWindow.cpp
     ui/LoginWindow/Login.cpp
     ui/ApplicationWindow/Application.cpp
 )
 
 set(HEADERS
-    include/client/client.h
-    include/client/run_client.h
-    include/common/message.h
+    include/client/Client.h
+    include/client/run_Client.h
     ui/RegWindow/MainWindow.h
     ui/LoginWindow/Login.h
     ui/ApplicationWindow/Application.h
