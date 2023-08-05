@@ -35,7 +35,18 @@ void  Login::on_pushButton_clicked()
 //Login
 void Login::on_button_continue_reg_clicked()
 {
-    
+    if(isFieldsValid)
+    {
+
+
+    }
+    else
+    {
+        // Вывод сообщения об ошибке или предупреждения пользователю
+        ui->lineEdit_empty->setText("Заполните все поля");
+        ui->lineEdit_empty->setStyleSheet("color: red;");
+        ui->lineEdit_empty->setVisible(true);
+    }
 }
 
 
