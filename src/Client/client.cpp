@@ -12,7 +12,7 @@ Client::Client(boost::asio::io_context& io_context, uint16_t port, boost::asio::
 
 void Client::connectToServer(const std::string& email, const std::string& username, const std::string& password) {
   boost::asio::ip::tcp::resolver resolver(io_context_);
-  boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), "127.0.0.1", std::to_string(port_));
+  boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), "213.222.226.234", std::to_string(port_));
   boost::asio::ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
 
   boost::asio::async_connect(socket_, endpoint_iterator,
