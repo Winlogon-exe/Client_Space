@@ -1,3 +1,7 @@
+#include<QMessageBox>
+#include<QDebug>
+#include<iostream>
+
 #include "client/client.h"
 
 Client::Client(net::io_context &io_context, uint16_t port) : io_context_(io_context), socket_(io_context), port_(port) {}
@@ -5,7 +9,7 @@ Client::Client(net::io_context &io_context, uint16_t port) : io_context_(io_cont
 void Client::connectToServer(const std::string &email, const std::string &username, const std::string &password)
 {
     net::ip::tcp::resolver resolver(io_context_);
-    auto endpoints = resolver.resolve("213.222.226.234", std::to_string(port_));
+    auto endpoints = resolver.resolve(server_ip, std::to_string(port_));
     net::connect(socket_, endpoints);
 
     std::string data = "email=" + email + "&username=" + username + "&password=" + password;
@@ -19,7 +23,7 @@ void Client::sendPostRequest(const std::string &data)
     req.target("/post");
     req.version(11);
 
-    req.set(http::field::host, "213.222.226.234");
+    req.set(http::field::host, server_ip);
     req.set(http::field::content_type, "text/plain");
     req.set(http::field::content_length, std::to_string(data.size()));
 
@@ -38,10 +42,12 @@ void Client::receiveResponse(beast::flat_buffer &buffer)
 
     if (res.result() == http::status::ok)
     {
-        std::cout << "Server response: " << res.body() << std::endl;
+        qDebug() << "Server response: " << res.body();
     }
     else
     {
-        std::cerr << "Server returned error: " << res.result_int() << std::endl;
+        qDebug() << "Failed to connect to server: " << res.result_int();
+        // Выводим сообщение об ошибке пользователю
+        QMessageBox::critical(nullptr, "Connection Error", QString::fromStdString("Failed to connect to server: " + std::to_string(res.result_int())));
     }
 }
