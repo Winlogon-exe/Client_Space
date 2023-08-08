@@ -1,8 +1,6 @@
 #include "ui/RegWindow/mainwindow.h"
 #include "mainwindow.h"
 
-
-
 #include <QApplication>
 #include<thread>
 
