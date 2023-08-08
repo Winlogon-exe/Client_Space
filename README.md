@@ -1,4 +1,4 @@
-# Space_Git
+# Space_Client
 
 ## ОПИСАНИЕ ПРОЕКТА
 
