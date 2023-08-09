@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidget>
-
+#include <QInputDialog>
 Application::Application(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Application),
@@ -22,9 +22,6 @@ Application::Application(QWidget *parent) :
     messageDisplayWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
     messageInputWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
 
-    channelListWidget->addItem("Общий");
-    channelListWidget->addItem("Разработка");
-    channelListWidget->addItem("Оффтоп");
 }
 
 Application::~Application()
@@ -59,6 +56,7 @@ void Application::on_lineEditMessageInput_returnPressed()
         messages[channelName].append(content);
 
         messageDisplayWidget->append(content);
+
         client->sendMessage(content.toStdString());
         messageInputWidget->clear();
     }
@@ -70,6 +68,17 @@ void Application::addChannel(const QString& channelName)
         channels.append(channelName);
         messages.insert(channelName, QVector<QString>());
         channelListWidget->addItem(channelName);
+    }
+}
+
+
+void Application::on_addChannel_clicked()
+{
+
+    QString newChannelName = QInputDialog::getText(this, "Добавить канал", "Введите имя нового канала:", QLineEdit::Normal, "");
+
+    if (!newChannelName.isEmpty()) {
+        addChannel(newChannelName);
     }
 }
 

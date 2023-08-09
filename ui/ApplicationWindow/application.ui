@@ -89,6 +89,19 @@ QPlainTextEdit {
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="addChannel">
+    <property name="geometry">
+     <rect>
+      <x>179</x>
+      <y>40</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>add</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

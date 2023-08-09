@@ -25,6 +25,8 @@ private slots:
 
     void on_lineEditMessageInput_returnPressed();
 
+    void on_addChannel_clicked();
+
 private:
     Ui::Application *ui;
     QListWidget *channelListWidget;
