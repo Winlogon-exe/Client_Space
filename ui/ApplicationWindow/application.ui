@@ -92,14 +92,14 @@ QPlainTextEdit {
    <widget class="QPushButton" name="addChannel">
     <property name="geometry">
      <rect>
-      <x>179</x>
+      <x>220</x>
       <y>40</y>
-      <width>71</width>
+      <width>41</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>add</string>
+     <string>+</string>
     </property>
    </widget>
   </widget>

@@ -74,7 +74,6 @@ void Application::addChannel(const QString& channelName)
 
 void Application::on_addChannel_clicked()
 {
-
     QString newChannelName = QInputDialog::getText(this, "Добавить канал", "Введите имя нового канала:", QLineEdit::Normal, "");
 
     if (!newChannelName.isEmpty()) {
