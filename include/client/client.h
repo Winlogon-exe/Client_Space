@@ -25,4 +25,5 @@ public:
     void connectToServer(const std::string &email, const std::string &username, const std::string &password);
     void sendPostRequest(const std::string &data);
     void receiveResponse(beast::flat_buffer &buffer);
+    void sendMessage(const std::string& message);
 };

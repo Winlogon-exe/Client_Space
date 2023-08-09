@@ -51,3 +51,8 @@ void Client::receiveResponse(beast::flat_buffer &buffer)
         QMessageBox::critical(nullptr, "Connection Error", QString::fromStdString("Failed to connect to server: " + std::to_string(res.result_int())));
     }
 }
+
+void Client::sendMessage(const std::string &data)
+{
+    sendPostRequest(data);
+}

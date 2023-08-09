@@ -5,6 +5,8 @@
 #include <QListWidget>
 #include<QTextEdit>
 
+#include"client/client.h"
+
 
 namespace Ui {
 class Application;
@@ -33,5 +35,7 @@ private:
     int currentChannelIndex;
 
     void addChannel(const QString& channelName);
+
+    Client* client;
 };
 #endif // APPLICATION_H
