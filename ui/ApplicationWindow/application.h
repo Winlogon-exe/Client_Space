@@ -36,6 +36,6 @@ private:
 
     void addChannel(const QString& channelName);
 
-    Client* client;
+    Client *client;
 };
 #endif // APPLICATION_H
