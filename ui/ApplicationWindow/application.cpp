@@ -25,7 +25,7 @@ Application::Application(QWidget *parent) :
 
      boost::asio::io_context io_context;
      client = std::make_shared<Client>(io_context, 49152);
-      io_context.run();
+
 }
 
 Application::~Application()
