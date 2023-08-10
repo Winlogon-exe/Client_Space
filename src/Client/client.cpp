@@ -39,6 +39,7 @@ void Client::sendPostRequest(const std::string &data)
         beast::flat_buffer buffer;
         receiveResponse(buffer);
     } catch (const std::exception &e) {
+        qDebug() << "sendPostRequest error: " << e.what();
         handleException(e);
     }
 }
@@ -51,21 +52,21 @@ void Client::receiveResponse(beast::flat_buffer &buffer)
 
         if (res.result() == http::status::ok)
         {
-            std::cout << "Server response: " << res.body() << std::endl;
+            qDebug() << "Server response: " << res.body();
         }
         else
         {
             qDebug() << "Failed to connect to server: " << res.result_int();
-            //handleServerError(res.result_int());
+            handleServerError(res.result_int());
         }
     } catch (const std::exception &e) {
+        qDebug() << "receiveResponse error: " << e.what();
         handleException(e);
     }
 }
 
 void Client::handleException(const std::exception &e)
 {
-    qDebug() << "An error occurred: " << e.what();
     QMessageBox::critical(nullptr, "Error", QString::fromStdString("An error occurred: " + std::string(e.what())));
 }
 
@@ -78,6 +79,6 @@ void Client::handleServerError(int statusCode)
 
 void Client::sendMessage(const std::string &data)
 {
-    std::cout << "Sending message: " << data << std::endl;
+    qDebug() << "Sending message: " << data;
     sendPostRequest(data);
 }
