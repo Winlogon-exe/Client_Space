@@ -3,9 +3,8 @@
 void runClient(const QString &email, const QString &username, const QString &password) {
     boost::asio::io_context io_context;
     boost::asio::streambuf buffer;
-    Client client(io_context, 49152);
-
-    client.connectToServer(email.toStdString(), username.toStdString(), password.toStdString());
-
+    std::shared_ptr<Client> client;
+    client = std::make_shared<Client>(io_context, 49152);
+    client->connectToServer(email.toStdString(), username.toStdString(), password.toStdString());
     io_context.run();
 }

@@ -16,7 +16,7 @@ void Client::connectToServer(const std::string &email, const std::string &userna
         std::string data = "email=" + email + "&username=" + username + "&password=" + password;
         sendPostRequest(data);
     } catch (const std::exception &e) {
-       // handleException(e);
+        handleException(e);
     }
 }
 
@@ -29,7 +29,7 @@ void Client::sendPostRequest(const std::string &data)
         req.version(11);
 
         req.set(http::field::host, server_ip);
-        req.set(http::field::content_type, "text/plain");
+        req.set(http::field::content_type, "text/plain; charset=utf-8");
         req.set(http::field::content_length, std::to_string(data.size()));
 
         req.body() = data;
@@ -39,7 +39,7 @@ void Client::sendPostRequest(const std::string &data)
         beast::flat_buffer buffer;
         receiveResponse(buffer);
     } catch (const std::exception &e) {
-        //handleException(e);
+        handleException(e);
     }
 }
 
@@ -51,7 +51,7 @@ void Client::receiveResponse(beast::flat_buffer &buffer)
 
         if (res.result() == http::status::ok)
         {
-            qDebug() << "Server response: " << res.body();
+            std::cout << "Server response: " << res.body() << std::endl;
         }
         else
         {
@@ -59,7 +59,7 @@ void Client::receiveResponse(beast::flat_buffer &buffer)
             //handleServerError(res.result_int());
         }
     } catch (const std::exception &e) {
-       // handleException(e);
+        handleException(e);
     }
 }
 
@@ -78,5 +78,6 @@ void Client::handleServerError(int statusCode)
 
 void Client::sendMessage(const std::string &data)
 {
+    std::cout << "Sending message: " << data << std::endl;
     sendPostRequest(data);
 }

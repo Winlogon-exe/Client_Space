@@ -6,6 +6,7 @@
 #include<QTextEdit>
 
 #include"client/client.h"
+#include"client/run_client.h"
 
 
 namespace Ui {
@@ -37,7 +38,6 @@ private:
     int currentChannelIndex;
 
     void addChannel(const QString& channelName);
-
-    Client *client;
+    std::shared_ptr<Client> client;  // Поле для хранения клиента
 };
 #endif // APPLICATION_H

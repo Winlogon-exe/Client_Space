@@ -12,6 +12,7 @@
 #include"application.h"
 #include"client/run_client.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)

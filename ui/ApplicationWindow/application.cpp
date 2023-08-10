@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QListWidget>
 #include <QInputDialog>
+
 Application::Application(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Application),
@@ -21,6 +22,9 @@ Application::Application(QWidget *parent) :
     channelListWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
     messageDisplayWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
     messageInputWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
+
+     boost::asio::io_context io_context;
+     client = std::make_shared<Client>(io_context, 49152);
 
 }
 
@@ -80,4 +84,3 @@ void Application::on_addChannel_clicked()
         addChannel(newChannelName);
     }
 }
-
