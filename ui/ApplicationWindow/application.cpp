@@ -61,7 +61,9 @@ void Application::on_lineEditMessageInput_returnPressed()
 
         messageDisplayWidget->append(content);
 
-        //client->sendMessage(content.toStdString());
+        // Вызываем функцию из синглтона RunClient
+        // Вызываем новый метод startMessage из синглтона RunClient
+        RunClient::getInstance().startMessage(content.toStdString());
         messageInputWidget->clear();
     }
 }

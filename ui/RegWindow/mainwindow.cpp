@@ -52,11 +52,10 @@ void MainWindow::on_button_continue_reg_clicked()
         QString username = ui->lineEdit_username->text();
         QString password = ui->lineEdit_password->text();
 
-        // Запускаем клиента в отдельном потоке и передаем ему данные
-        std::thread client_thread([email, username, password]() {
-            runClient(email, username, password);
+        // Запускаем клиента с использованием синглтона RunClient
+        std::thread client_thread([&email, &username, &password]() {
+            RunClient::getInstance().run(email, username, password);
         });
-
 
         // Показываем Application
         applicationWindow->show();
