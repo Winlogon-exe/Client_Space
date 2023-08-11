@@ -6,5 +6,7 @@ void runClient(const QString &email, const QString &username, const QString &pas
     std::shared_ptr<Client> client;
     client = std::make_shared<Client>(io_context, 49152);
     client->connectToServer(email.toStdString(), username.toStdString(), password.toStdString());
+
+    client->sendMessage("123");
     io_context.run();
 }

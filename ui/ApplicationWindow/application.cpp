@@ -23,8 +23,8 @@ Application::Application(QWidget *parent) :
     messageDisplayWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
     messageInputWidget->setStyleSheet("background-color: #36393F; color: #FFFFFF;");
 
-     boost::asio::io_context io_context;
-     client = std::make_shared<Client>(io_context, 49152);
+     //boost::asio::io_context io_context;
+     //client = std::make_shared<Client>(io_context, 49152);
 
 }
 
@@ -61,7 +61,7 @@ void Application::on_lineEditMessageInput_returnPressed()
 
         messageDisplayWidget->append(content);
 
-        client->sendMessage(content.toStdString());
+        //client->sendMessage(content.toStdString());
         messageInputWidget->clear();
     }
 }
