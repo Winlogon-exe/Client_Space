@@ -7,7 +7,7 @@ class RunClient {
 public:
     static RunClient& getInstance();
     void run(const QString &email, const QString &username, const QString &password);
-    void startMessage(const std::string &data); // Добавляем новый метод
+    void startMessage(const std::string &data);
 
     boost::asio::io_context io_context;
     boost::asio::streambuf buffer;

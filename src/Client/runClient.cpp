@@ -16,7 +16,6 @@ void RunClient::run(const QString &email, const QString &username, const QString
 
 void RunClient::startMessage(const std::string &data) {
     // Вызываем sendMessage для клиента
-    // Предполагается, что client уже создан и подключен к серверу
     client->sendMessage(data);
 }
 RunClient::RunClient() {
