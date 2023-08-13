@@ -1,4 +1,4 @@
-#include <boost/asio.hpp> // включаем этот заголовок для boost::asio
+#include <boost/asio.hpp>
 #include "client/run_client.h"
 #include "client/client.h"
 
