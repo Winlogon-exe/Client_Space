@@ -19,5 +19,5 @@ void RunClient::startMessage(const std::string &data) {
     client->sendMessage(data);
 }
 RunClient::RunClient() {
-    // Ваши инициализации здесь, если необходимо
+
 }
