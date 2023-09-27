@@ -17,7 +17,7 @@ namespace net = boost::asio;
 class Client
 {
 private:
-    const std::string server_ip = "213.222.226.234";
+    const std::string server_ip = "213.222.226";
     net::io_context &io_context_;
     net::ip::tcp::socket socket_;
     uint16_t port_;
